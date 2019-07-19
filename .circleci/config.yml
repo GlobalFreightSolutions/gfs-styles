@@ -47,13 +47,15 @@ workflows:
       - build:
           filters:
             tags:
-              only: /^v.*-preview*/
+              only: /^-preview*/
       - deploy-beta:
           requires:
             - build
           filters:
             tags:
-              only: /^v.*-preview*/
+              only: /^-preview*/
+            branches:
+              only: /.*/
   test-deploy:
     jobs:
       - build:
