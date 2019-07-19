@@ -42,12 +42,9 @@ jobs:
 
 workflows:
   version: 2
-  test-deploy-beta:
+  build-deploy:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: /.*/
+      - build
       - deploy_beta:
           requires:
             - build
@@ -56,17 +53,11 @@ workflows:
               only: /^v.*/
             branches:
               only: /.*/
-  test-deploy:
-    jobs:
-      - build:
-          filters:
-            branches:
-              ignore: /.*/
       - deploy:
           requires:
             - build
           filters:
             tags:
-              only: //
+              only: /^v.*/
             branches:
               ignore: /.*/
