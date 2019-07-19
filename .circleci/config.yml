@@ -24,7 +24,7 @@ jobs:
       - run:
         name: Authenticate with NPM
         command: echo "//registry,npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-      -run:
+      - run:
         name: Publish beta package
         command: npm publish --tag beta
 
@@ -36,7 +36,7 @@ jobs:
       - run:
         name: Authenticate with NPM
         command: echo "//registry,npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-      -run:
+      - run:
         name: Publish package
         command: npm publish
 
