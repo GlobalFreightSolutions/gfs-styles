@@ -1,0 +1,82 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker: 
+    - image: circleci/node:7.10
+
+jobs:
+
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - persist_to_workspace:
+        root: ~/repo
+        paths: .
+
+  deploy_beta:
+    << *defaults
+    steps:
+      - attach_workspace:
+        at: ~/repo
+      - run:
+        name: Authenticate with NPM
+        command: echo "//registry,npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      -run:
+        name: Publish beta package
+        command: npm publish --tag beta
+
+  deploy:
+    << *defaults
+    steps:
+      - attach_workspace:
+        at: ~/repo
+      - run:
+        name: Authenticate with NPM
+        command: echo "//registry,npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      -run:
+        name: Publish package
+        command: npm publish
+
+workflows:
+  version: 2
+  test-deploy-beta:
+    jobs:
+      - prequisites:
+        filters:
+          tags:
+            only: /^v.*-preview*/
+      - test:
+        requires:
+          - prequisites
+        filters:
+          tags:
+            only: /^v.*-preview*/
+      - deploy-beta:
+        requires:
+          - test
+        filters:
+          tags:
+            only: /^v.*-preview*/
+  test-deploy:
+    jobs:
+      - prequisites:
+        filters:
+          tags:
+            only: /^v.*/
+      - test:
+        requires:
+          - prequisites
+        filters:
+          tags:
+            only: /^v.*/
+      - deploy:
+        requires:
+          - test
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore: /.*/
