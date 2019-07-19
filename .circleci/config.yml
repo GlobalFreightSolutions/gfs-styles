@@ -13,8 +13,8 @@ jobs:
       - checkout
 
       - persist_to_workspace:
-        root: ~/repo
-        paths: .
+          root: ~/repo
+          paths: .
 
   deploy_beta:
     <<: *defaults
