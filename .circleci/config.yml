@@ -54,9 +54,13 @@ workflows:
           filters:
             tags:
               only: /^.*-preview/
+            branches:
+              ignore: master
       - deploy:
           requires:
             - build
           filters:
             tags:
-              ignore: /^.*-preview/
+              only: /^.*/
+            branches:
+              only: master
