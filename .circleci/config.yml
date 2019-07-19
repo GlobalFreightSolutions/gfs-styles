@@ -44,37 +44,25 @@ workflows:
   version: 2
   test-deploy-beta:
     jobs:
-      - prequisites:
-        filters:
-          tags:
-            only: /^v.*-preview*/
-      - test:
-        requires:
-          - prequisites
+      - build:
         filters:
           tags:
             only: /^v.*-preview*/
       - deploy-beta:
         requires:
-          - test
+          - build
         filters:
           tags:
             only: /^v.*-preview*/
   test-deploy:
     jobs:
-      - prequisites:
-        filters:
-          tags:
-            only: /^v.*/
-      - test:
-        requires:
-          - prequisites
+      - build:
         filters:
           tags:
             only: /^v.*/
       - deploy:
         requires:
-          - test
+          - build
         filters:
           tags:
             only: /^v.*/
