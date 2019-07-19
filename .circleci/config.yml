@@ -53,7 +53,7 @@ workflows:
             - build
           filters:
             tags:
-              only: /-preview/
+              only: /^v.*/
             branches:
               only: /.*/
   test-deploy:
@@ -67,6 +67,6 @@ workflows:
             - build
           filters:
             tags:
-              only: /^v.*/
+              only: //
             branches:
               ignore: /.*/
