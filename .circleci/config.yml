@@ -20,25 +20,25 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-        at: ~/repo
+          at: ~/repo
       - run:
-        name: Authenticate with NPM
-        command: echo "//registry,npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+          name: Authenticate with NPM
+          command: echo "//registry,npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
       - run:
-        name: Publish beta package
-        command: npm publish --tag beta
+          name: Publish beta package
+          command: npm publish --tag beta
 
   deploy:
     <<: *defaults
     steps:
       - attach_workspace:
-        at: ~/repo
+          at: ~/repo
       - run:
-        name: Authenticate with NPM
-        command: echo "//registry,npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+          name: Authenticate with NPM
+          command: echo "//registry,npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
       - run:
-        name: Publish package
-        command: npm publish
+          name: Publish package
+          command: npm publish
 
 workflows:
   version: 2
