@@ -46,22 +46,22 @@ workflows:
     jobs:
       - build:
           filters:
-            tags:
-              only: /^-preview*/
-      - deploy-beta:
+            branches:
+              only: /.*/
+      - deploy_beta:
           requires:
             - build
           filters:
             tags:
-              only: /^-preview*/
+              only: /-preview/
             branches:
               only: /.*/
   test-deploy:
     jobs:
       - build:
           filters:
-            tags:
-              only: /^v.*/
+            branches:
+              ignore: /.*/
       - deploy:
           requires:
             - build
