@@ -53,10 +53,11 @@ workflows:
             - build
           filters:
             tags:
-              only: /-preview/
+              only: /^.*-preview/
       - deploy:
           requires:
             - build
           filters:
             tags:
               only: /^v.*/
+              ignore: /^.*-preview/
