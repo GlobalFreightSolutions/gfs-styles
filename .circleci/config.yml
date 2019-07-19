@@ -45,26 +45,26 @@ workflows:
   test-deploy-beta:
     jobs:
       - build:
-        filters:
-          tags:
-            only: /^v.*-preview*/
+          filters:
+            tags:
+              only: /^v.*-preview*/
       - deploy-beta:
-        requires:
-          - build
-        filters:
-          tags:
-            only: /^v.*-preview*/
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*-preview*/
   test-deploy:
     jobs:
       - build:
-        filters:
-          tags:
-            only: /^v.*/
+          filters:
+            tags:
+              only: /^v.*/
       - deploy:
-        requires:
-          - build
-        filters:
-          tags:
-            only: /^v.*/
-          branches:
-            ignore: /.*/
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
